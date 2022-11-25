@@ -1,2 +1,3 @@
 # battleship
-The classic battleship game
+
+The classic battleship game. Using webpack & JEST.
