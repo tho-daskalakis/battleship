@@ -20,6 +20,8 @@
   },
   "homepage": "https://github.com/tho-daskalakis/battleship#readme",
   "devDependencies": {
+    "@babel/preset-env": "^7.20.2",
+    "babel-jest": "^29.3.1",
     "css-loader": "^6.7.2",
     "sass-loader": "^13.2.0",
     "style-loader": "^3.3.1",
