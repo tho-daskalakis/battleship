@@ -15,6 +15,8 @@ function shipFactory(shipLength: number): Ship {
    * Increase number of hits. Update sunk status.
    */
   function hit(): void {
+    // if (sunk) return;
+
     hits++;
 
     if (hits >= length) sunk = true;
