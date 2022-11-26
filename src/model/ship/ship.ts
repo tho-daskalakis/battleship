@@ -35,3 +35,5 @@ function shipFactory(shipLength: number): Ship {
     isSunk,
   };
 }
+
+module.exports = { shipFactory };
