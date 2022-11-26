@@ -12,20 +12,19 @@ function shipFactory(shipLength: number): Ship {
   let sunk = false;
 
   /**
-   * Increase number of hits.
+   * Increase number of hits. Update sunk status.
    */
   function hit(): void {
     hits++;
+
+    if (hits >= length) sunk = true;
   }
 
   /**
-   * Calculate if ship is sunk by comparing hits and length.
    * @returns True if ship is sunk.
    */
   function isSunk(): boolean {
-    if (hits < length) return false;
-
-    return true;
+    return sunk;
   }
 
   return {
