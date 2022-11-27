@@ -1,7 +1,6 @@
 interface Ship {
   length: number;
-  hits: number;
-  sunk: boolean;
+  getHits: object;
   hit: object;
   isSunk: object;
 }
@@ -11,13 +10,19 @@ function shipFactory(shipLength: number): Ship {
   let hits = 0;
   let sunk = false;
 
+  function getHits(): number {
+    return hits;
+  }
+
   /**
    * Increase number of hits. Update sunk status.
    */
   function hit(): void {
     // if (sunk) return;
 
+    console.log('hit() is called, hits:', hits);
     hits++;
+    console.log('hits:', hits);
 
     if (hits >= length) sunk = true;
   }
@@ -31,10 +36,9 @@ function shipFactory(shipLength: number): Ship {
 
   return {
     length,
-    hits,
-    sunk,
-    hit,
+    getHits,
     isSunk,
+    hit,
   };
 }
 

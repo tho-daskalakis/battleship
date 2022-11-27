@@ -9,16 +9,17 @@ test('new ship should not be sunk', () => {
 });
 
 test('new ship should start with 0 hits', () => {
-  expect(ship.shipFactory().hits).toBe(0);
+  expect(ship.shipFactory().getHits()).toBe(0);
 });
 
 describe('hitting ships', () => {
-  const testShip = ship.shipFactory(1);
+  let testShip;
   const startingHits = 0;
 
   beforeEach(() => {
+    testShip = ship.shipFactory(1);
     testShip.hit();
-    console.log({ testShip });
+    // console.log({ testShip });
   });
 
   afterEach(() => {
@@ -26,7 +27,7 @@ describe('hitting ships', () => {
   });
 
   test('hit() should increase hits by 1', () => {
-    expect(testShip.hits).toBe(startingHits + 1);
+    expect(testShip.getHits()).toBe(startingHits + 1);
   });
 
   test('ship of length 1 should be sunk after 1 hit', () => {
