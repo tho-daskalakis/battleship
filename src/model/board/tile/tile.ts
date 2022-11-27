@@ -1,16 +1,12 @@
-interface Position {
-  x: number;
-  y: string;
-}
+import { Position, xPosition, yPosition } from './position';
 
 interface Tile {
   coords: Position;
   isHit: boolean;
-  ship: Ship | null;
   getShip: object;
 }
 
-function tileFactory(x: number, y: string): Tile {
+function tileFactory(x: xPosition, y: yPosition): Tile {
   const coords = { x, y };
   let isHit = false;
   let ship: Ship | null = null;
@@ -22,9 +18,10 @@ function tileFactory(x: number, y: string): Tile {
   return {
     coords,
     isHit,
-    ship,
     getShip,
   };
 }
 
 export { tileFactory };
+
+module.exports = { tileFactory };
