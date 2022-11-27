@@ -23,6 +23,6 @@ function tileFactory(x: xPosition, y: yPosition): Tile {
   };
 }
 
-export { tileFactory };
+export { Tile, tileFactory };
 
 module.exports = { tileFactory };

@@ -1,6 +1,6 @@
 const tile = require('./tile');
 
-describe('default tile', () => {
+describe('default tile of coords(0, A)', () => {
   let testTile;
 
   beforeAll(() => {
