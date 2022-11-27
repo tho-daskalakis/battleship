@@ -1,3 +1,4 @@
+import { Ship } from '../../ship/ship';
 import { Position, xPosition, yPosition } from './position';
 
 interface Tile {

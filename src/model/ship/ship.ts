@@ -40,4 +40,6 @@ function shipFactory(shipLength: number): Ship {
   };
 }
 
+export { Ship, shipFactory };
+
 module.exports = { shipFactory };
