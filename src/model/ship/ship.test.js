@@ -19,7 +19,6 @@ describe('hitting ships', () => {
   beforeEach(() => {
     testShip = ship.shipFactory(1);
     testShip.hit();
-    // console.log({ testShip });
   });
 
   afterEach(() => {
@@ -32,5 +31,23 @@ describe('hitting ships', () => {
 
   test('ship of length 1 should be sunk after 1 hit', () => {
     expect(testShip.isSunk()).toBeTruthy();
+  });
+});
+
+describe('sunk ships', () => {
+  let testShip;
+
+  beforeAll(() => {
+    testShip = ship.shipFactory(1);
+    testShip.hit();
+    testShip.hit();
+  });
+
+  test('ship is actually sunk', () => {
+    expect(testShip.isSunk()).toBeTruthy();
+  });
+
+  test('hits should not be increasing if a ship is sunk', () => {
+    expect(testShip.getHits()).toBe(1);
   });
 });
