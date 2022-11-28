@@ -1,4 +1,5 @@
-import { Tile } from './tile/tile';
+import { xPosition } from './tile/position';
+import { Tile, tileFactory } from './tile/tile';
 
 interface Board {
   board: Array<Array<Tile>>;
@@ -17,3 +18,5 @@ function boardFactory(): Board {
     init,
   };
 }
+
+export { boardFactory };
