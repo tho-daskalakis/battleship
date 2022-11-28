@@ -1,8 +1,8 @@
 const tile = require('./tile');
+const ship = require('../../ship/ship');
 
+let testTile;
 describe('default tile of coords(0, A)', () => {
-  let testTile;
-
   beforeAll(() => {
     testTile = tile.tileFactory(0, 'A');
   });
@@ -17,5 +17,21 @@ describe('default tile of coords(0, A)', () => {
 
   test('tile should start with no ship (null)', () => {
     expect(testTile.getShip()).toBeNull();
+  });
+});
+
+describe('ships on tiles', () => {
+  const testShip = ship.shipFactory('Carrier', 5);
+
+  beforeAll(() => {
+    testTile.setShip(ship.shipFactory('Carrier', 5));
+  });
+
+  test('test ship name', () => {
+    expect(testTile.getShip().name).toBe(testShip.name);
+  });
+
+  test('test ship length', () => {
+    expect(testTile.getShip().length).toBe(testShip.length);
   });
 });

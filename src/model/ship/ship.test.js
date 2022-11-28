@@ -1,7 +1,7 @@
 const ship = require('./ship');
 
 test('create ship of length 5', () => {
-  expect(ship.shipFactory(5).length).toBe(5);
+  expect(ship.shipFactory('', 5).length).toBe(5);
 });
 
 test('new ship should not be sunk', () => {
@@ -17,7 +17,7 @@ describe('hitting ships', () => {
   const startingHits = 0;
 
   beforeEach(() => {
-    testShip = ship.shipFactory(1);
+    testShip = ship.shipFactory('', 1);
     testShip.hit();
   });
 
@@ -38,7 +38,7 @@ describe('sunk ships', () => {
   let testShip;
 
   beforeAll(() => {
-    testShip = ship.shipFactory(1);
+    testShip = ship.shipFactory('', 1);
     testShip.hit();
     testShip.hit();
   });

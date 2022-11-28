@@ -5,6 +5,7 @@ interface Tile {
   coords: Position;
   isHit: boolean;
   getShip: object;
+  setShip: object;
 }
 
 function tileFactory(x: xPosition, y: yPosition): Tile {
@@ -16,10 +17,15 @@ function tileFactory(x: xPosition, y: yPosition): Tile {
     return ship;
   }
 
+  function setShip(tileShip: Ship): void {
+    ship = tileShip;
+  }
+
   return {
     coords,
     isHit,
     getShip,
+    setShip,
   };
 }
 
