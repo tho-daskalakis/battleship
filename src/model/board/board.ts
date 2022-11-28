@@ -1,11 +1,12 @@
-import { Ship } from '../ship/ship';
+import { lettersToArrIndex } from '../../utils/convertBoardUnits';
+import { Ship, shipFactory } from '../ship/ship';
 import { Position } from './tile/position';
 import { Tile, tileFactory } from './tile/tile';
 
 interface Board {
-  init: object;
-  placeShip: object;
-  getBoard: object;
+  init: Function;
+  placeShip: Function;
+  getBoard: Function;
 }
 
 function boardFactory(): Board {
@@ -37,7 +38,35 @@ function boardFactory(): Board {
     pos: Position,
     ship: Ship,
     vertical: boolean = false
-  ): void {}
+  ): void {
+    // Check available space for ship based on rotation
+    const shipFitsBoard = vertical
+      ? 10 - pos.x + 1 - ship.length >= 0
+      : 10 - (lettersToArrIndex(pos.y) + 1) + 1 - ship.length >= 0;
+
+    if (shipFitsBoard) {
+      // Place ship according to rotation
+      if (vertical) {
+        for (let i = 0; i < ship.length; i++) {
+          // console.log(pos.x, lettersToArrIndex(pos.y) + i, pos.y);
+          console.log(getBoard());
+
+          board[pos.x][lettersToArrIndex(pos.y) + i].setShip(
+            shipFactory(ship.name, ship.length)
+          );
+        }
+      } else {
+        for (let i = 0; i < ship.length; i++) {
+          board[pos.x - 1 + i][lettersToArrIndex(pos.y)].setShip(
+            shipFactory(ship.name, ship.length)
+          );
+        }
+      }
+    } else {
+      // TODO: Throw error to handle ship out of bounds
+      console.log('Ship does not fit on board');
+    }
+  }
 
   function getBoard() {
     return board;

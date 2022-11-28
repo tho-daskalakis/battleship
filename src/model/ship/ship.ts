@@ -1,9 +1,9 @@
 interface Ship {
   name: string;
   length: number;
-  getHits: object;
-  hit: object;
-  isSunk: object;
+  getHits: Function;
+  hit: Function;
+  isSunk: Function;
 }
 
 function shipFactory(shipName: string, shipLength: number): Ship {

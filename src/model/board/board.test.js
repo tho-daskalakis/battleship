@@ -1,5 +1,6 @@
 const board = require('./board');
 const tile = require('./tile/tile');
+const ship = require('../ship/ship');
 
 describe('board init', () => {
   const testBoard = board.boardFactory();
@@ -21,5 +22,31 @@ describe('board init', () => {
 
   test('board[9][9] should have tile (10, J)', () => {
     expect(testBoard.getBoard()[9][9].coords).toEqual(testTile3.coords);
+  });
+});
+
+describe('set ship vertically on board', () => {
+  const testBoard = board.boardFactory();
+  const testShip = ship.shipFactory('Patrol boat', 2);
+
+  beforeAll(() => {
+    testBoard.init();
+    testBoard.placeShip({ x: 0, y: 'A' }, testShip, true);
+  });
+
+  test('tile (0, 0) should have a Patrol boat', () => {
+    expect(testBoard.getBoard()[0][0].getShip().name).toBe('Patrol boat');
+  });
+
+  test('tile (0, 1) should have a Patrol boat', () => {
+    expect(testBoard.getBoard()[0][1].getShip().name).toBe('Patrol boat');
+  });
+
+  test('tile (1, 0) should NOT have a Patrol boat', () => {
+    expect(testBoard.getBoard()[1][0].getShip()).toBeNull();
+  });
+
+  test('tile (0, 2) should NOT have a Patrol boat', () => {
+    expect(testBoard.getBoard()[0][2].getShip()).toBeNull();
   });
 });

@@ -4,8 +4,8 @@ import { Position, xPosition, yPosition } from './position';
 interface Tile {
   coords: Position;
   isHit: boolean;
-  getShip: object;
-  setShip: object;
+  getShip: Function;
+  setShip: Function;
 }
 
 function tileFactory(x: xPosition, y: yPosition): Tile {
