@@ -1,11 +1,13 @@
 interface Ship {
+  name: string;
   length: number;
   getHits: object;
   hit: object;
   isSunk: object;
 }
 
-function shipFactory(shipLength: number): Ship {
+function shipFactory(shipName: string, shipLength: number): Ship {
+  const name = shipName;
   const length = shipLength;
   let hits = 0;
   let sunk = false;
@@ -33,6 +35,7 @@ function shipFactory(shipLength: number): Ship {
   }
 
   return {
+    name,
     length,
     getHits,
     isSunk,
