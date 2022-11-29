@@ -45,25 +45,24 @@ function boardFactory(): Board {
       : 10 - (lettersToArrIndex(pos.y) + 1) + 1 - ship.length >= 0;
 
     if (shipFitsBoard) {
+      // TODO: Check for ship overlapping
+
       // Place ship according to rotation
       if (vertical) {
         for (let i = 0; i < ship.length; i++) {
-          // console.log(pos.x, lettersToArrIndex(pos.y) + i, pos.y);
-          console.log(getBoard());
-
           board[pos.x][lettersToArrIndex(pos.y) + i].setShip(
             shipFactory(ship.name, ship.length)
           );
         }
       } else {
         for (let i = 0; i < ship.length; i++) {
-          board[pos.x - 1 + i][lettersToArrIndex(pos.y)].setShip(
+          board[pos.x + i][lettersToArrIndex(pos.y)].setShip(
             shipFactory(ship.name, ship.length)
           );
         }
       }
     } else {
-      // TODO: Throw error to handle ship out of bounds
+      // TODO: Handle ship out of bounds
       console.log('Ship does not fit on board');
     }
   }
