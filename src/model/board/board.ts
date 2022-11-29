@@ -34,27 +34,43 @@ function boardFactory(): Board {
    * @param ship The ship to be placed.
    * @param vertical True if ship is placed vertically.
    */
-  function placeShip(
-    pos: Position,
-    ship: Ship,
-    vertical: boolean = false
-  ): void {
+  function placeShip(pos: Position, ship: Ship, vertical: boolean): void {
     // Check available space for ship based on rotation
     const shipFitsBoard = vertical
       ? 10 - pos.x + 1 - ship.length >= 0
       : 10 - (lettersToArrIndex(pos.y) + 1) + 1 - ship.length >= 0;
 
     if (shipFitsBoard) {
-      // TODO: Check for ship overlapping
-
       // Place ship according to rotation
       if (vertical) {
+        // Check for vertical ship overlap
+        for (let i = 0; i < ship.length; i++) {
+          // Tiles with no ship return null as ship value
+          const hasShip = board[pos.x][lettersToArrIndex(pos.y) + i].getShip();
+          if (hasShip) {
+            console.log('ship already placed');
+            return;
+          }
+        }
+
+        // Space clear, place ship
         for (let i = 0; i < ship.length; i++) {
           board[pos.x][lettersToArrIndex(pos.y) + i].setShip(
             shipFactory(ship.name, ship.length)
           );
         }
       } else {
+        // Check for horizontal ship overlap
+        for (let i = 0; i < ship.length; i++) {
+          // Tiles with no ship return null as ship value
+          const hasShip = board[pos.x + i][lettersToArrIndex(pos.y)].getShip();
+          if (hasShip) {
+            console.log('ship already placed');
+            return;
+          }
+        }
+
+        // Space clear, place ship
         for (let i = 0; i < ship.length; i++) {
           board[pos.x + i][lettersToArrIndex(pos.y)].setShip(
             shipFactory(ship.name, ship.length)

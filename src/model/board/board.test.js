@@ -76,3 +76,20 @@ describe('set ship horizontally on board', () => {
     expect(testBoard.getBoard()[2][0].getShip()).toBeNull();
   });
 });
+
+describe('ship overlapping', () => {
+  const testBoard = board.boardFactory();
+  const patrolBoat = ship.shipFactory('Patrol boat', 2);
+  const submarine = ship.shipFactory('Submarine', 3);
+
+  beforeAll(() => {
+    testBoard.init();
+    testBoard.placeShip({ x: 0, y: 'A' }, patrolBoat, true);
+    testBoard.placeShip({ x: 0, y: 'A' }, submarine, true);
+    testBoard.placeShip({ x: 0, y: 'A' }, submarine, false);
+  });
+
+  test('tile (0, 0) should have a patrol boat', () => {
+    expect(testBoard.getBoard()[0][0].getShip().name).toBe('Patrol boat');
+  });
+});
