@@ -3,7 +3,7 @@ import { Position, xPosition, yPosition } from './position';
 
 interface Tile {
   coords: Position;
-  isHit: boolean;
+  getHit: Function;
   hit: Function;
   getShip: Function;
   setShip: Function;
@@ -14,7 +14,13 @@ function tileFactory(x: xPosition, y: yPosition): Tile {
   let isHit = false;
   let ship: Ship | null = null;
 
+  function getHit() {
+    return isHit;
+  }
+
   function hit(): void {
+    if (isHit) return;
+
     isHit = true;
 
     if (ship) ship.hit();
@@ -30,7 +36,7 @@ function tileFactory(x: xPosition, y: yPosition): Tile {
 
   return {
     coords,
-    isHit,
+    getHit,
     hit,
     getShip,
     setShip,

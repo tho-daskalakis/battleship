@@ -137,6 +137,6 @@ describe('ship object should be the same across tiles', () => {
   });
 
   test('tile (1, B) is hit', () => {
-    expect(testBoard.getTile({ x: 1, y: 'B' }).isHit).toBeTruthy();
+    expect(testBoard.getTile({ x: 1, y: 'B' }).getHit()).toBeTruthy();
   });
 });
