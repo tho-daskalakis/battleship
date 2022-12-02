@@ -7,6 +7,7 @@ interface Board {
   init: Function;
   placeShip: Function;
   getBoard: Function;
+  getTile: Function;
 }
 
 function boardFactory(): Board {
@@ -37,8 +38,8 @@ function boardFactory(): Board {
   function placeShip(pos: Position, ship: Ship, vertical: boolean): void {
     // Check available space for ship based on rotation
     const shipFitsBoard = vertical
-      ? 10 - pos.x + 1 - ship.length >= 0
-      : 10 - (lettersToArrIndex(pos.y) + 1) + 1 - ship.length >= 0;
+      ? 10 - (lettersToArrIndex(pos.y) + 1) + 1 - ship.length >= 0
+      : 10 - pos.x + 1 - ship.length >= 0;
 
     if (shipFitsBoard) {
       // Place ship according to rotation
@@ -46,7 +47,8 @@ function boardFactory(): Board {
         // Check for vertical ship overlap
         for (let i = 0; i < ship.length; i++) {
           // Tiles with no ship return null as ship value
-          const hasShip = board[pos.x][lettersToArrIndex(pos.y) + i].getShip();
+          const hasShip =
+            board[pos.x - 1][lettersToArrIndex(pos.y) + i].getShip();
           if (hasShip) {
             console.log('ship already placed');
             return;
@@ -55,7 +57,13 @@ function boardFactory(): Board {
 
         // Space clear, place ship
         for (let i = 0; i < ship.length; i++) {
-          board[pos.x][lettersToArrIndex(pos.y) + i].setShip(
+          console.log(
+            `placing ${ship.name} at ${pos.x - 1}, ${
+              lettersToArrIndex(pos.y) + i
+            }`
+          );
+
+          board[pos.x - 1][lettersToArrIndex(pos.y) + i].setShip(
             shipFactory(ship.name, ship.length)
           );
         }
@@ -63,7 +71,8 @@ function boardFactory(): Board {
         // Check for horizontal ship overlap
         for (let i = 0; i < ship.length; i++) {
           // Tiles with no ship return null as ship value
-          const hasShip = board[pos.x + i][lettersToArrIndex(pos.y)].getShip();
+          const hasShip =
+            board[pos.x - 1 + i][lettersToArrIndex(pos.y)].getShip();
           if (hasShip) {
             console.log('ship already placed');
             return;
@@ -72,14 +81,29 @@ function boardFactory(): Board {
 
         // Space clear, place ship
         for (let i = 0; i < ship.length; i++) {
-          board[pos.x + i][lettersToArrIndex(pos.y)].setShip(
+          console.log(
+            `placing ${ship.name} at ${pos.x - 1 + i}, ${lettersToArrIndex(
+              pos.y
+            )}`
+          );
+
+          board[pos.x - 1 + i][lettersToArrIndex(pos.y)].setShip(
             shipFactory(ship.name, ship.length)
           );
         }
       }
     } else {
       // TODO: Handle ship out of bounds
-      console.log('Ship does not fit on board');
+      console.log(`${ship.name} does not fit on board`);
+    }
+  }
+
+  function receiveAttack(pos: Position): void {
+    const currBoard = getBoard();
+    if (currBoard[pos.x - 1][lettersToArrIndex(pos.y)].getShip() === null) {
+      // No ship, just mark tile as hit
+    } else {
+      // Call hit method on ship
     }
   }
 
@@ -87,10 +111,15 @@ function boardFactory(): Board {
     return board;
   }
 
+  function getTile(pos: Position): Tile {
+    return board[pos.x - 1][lettersToArrIndex(pos.y)];
+  }
+
   return {
     init,
     placeShip,
     getBoard,
+    getTile,
   };
 }
 

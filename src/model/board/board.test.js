@@ -13,15 +13,21 @@ describe('board init', () => {
   });
 
   test('board[0][0] should have tile (1, A)', () => {
-    expect(testBoard.getBoard()[0][0].coords).toEqual(testTile1.coords);
+    expect(testBoard.getTile({ x: 1, y: 'A' }).coords).toEqual(
+      testTile1.coords
+    );
   });
 
   test('board[1][1] should have tile (2, B)', () => {
-    expect(testBoard.getBoard()[1][1].coords).toEqual(testTile2.coords);
+    expect(testBoard.getTile({ x: 2, y: 'B' }).coords).toEqual(
+      testTile2.coords
+    );
   });
 
   test('board[9][9] should have tile (10, J)', () => {
-    expect(testBoard.getBoard()[9][9].coords).toEqual(testTile3.coords);
+    expect(testBoard.getTile({ x: 10, y: 'J' }).coords).toEqual(
+      testTile3.coords
+    );
   });
 });
 
@@ -31,23 +37,27 @@ describe('set ship vertically on board', () => {
 
   beforeAll(() => {
     testBoard.init();
-    testBoard.placeShip({ x: 0, y: 'A' }, testShip, true);
+    testBoard.placeShip({ x: 1, y: 'A' }, testShip, true);
   });
 
-  test('tile (0, 0) should have a Patrol boat', () => {
-    expect(testBoard.getBoard()[0][0].getShip().name).toBe('Patrol boat');
+  test('tile (1, A) should have a Patrol boat', () => {
+    expect(testBoard.getTile({ x: 1, y: 'A' }).getShip().name).toBe(
+      'Patrol boat'
+    );
   });
 
-  test('tile (0, 1) should have a Patrol boat', () => {
-    expect(testBoard.getBoard()[0][1].getShip().name).toBe('Patrol boat');
+  test('tile (1, B) should have a Patrol boat', () => {
+    expect(testBoard.getTile({ x: 1, y: 'B' }).getShip().name).toBe(
+      'Patrol boat'
+    );
   });
 
-  test('tile (1, 0) should NOT have a Patrol boat', () => {
-    expect(testBoard.getBoard()[1][0].getShip()).toBeNull();
+  test('tile (2, A) should NOT have a Patrol boat', () => {
+    expect(testBoard.getTile({ x: 2, y: 'A' }).getShip()).toBeNull();
   });
 
-  test('tile (0, 2) should NOT have a Patrol boat', () => {
-    expect(testBoard.getBoard()[0][2].getShip()).toBeNull();
+  test('tile (1, C) should NOT have a Patrol boat', () => {
+    expect(testBoard.getTile({ x: 1, y: 'C' }).getShip()).toBeNull();
   });
 });
 
@@ -57,23 +67,27 @@ describe('set ship horizontally on board', () => {
 
   beforeAll(() => {
     testBoard.init();
-    testBoard.placeShip({ x: 0, y: 'A' }, testShip, false);
+    testBoard.placeShip({ x: 1, y: 'A' }, testShip, false);
   });
 
-  test('tile (0, 0) should have a Patrol boat', () => {
-    expect(testBoard.getBoard()[0][0].getShip().name).toBe('Patrol boat');
+  test('tile (1, A) should have a Patrol boat', () => {
+    expect(testBoard.getTile({ x: 1, y: 'A' }).getShip().name).toBe(
+      'Patrol boat'
+    );
   });
 
-  test('tile (1, 0) should have a Patrol boat', () => {
-    expect(testBoard.getBoard()[1][0].getShip().name).toBe('Patrol boat');
+  test('tile (2, A) should have a Patrol boat', () => {
+    expect(testBoard.getTile({ x: 2, y: 'A' }).getShip().name).toBe(
+      'Patrol boat'
+    );
   });
 
-  test('tile (0, 1) should NOT have a Patrol boat', () => {
-    expect(testBoard.getBoard()[0][1].getShip()).toBeNull();
+  test('tile (1, B) should NOT have a Patrol boat', () => {
+    expect(testBoard.getTile({ x: 1, y: 'B' }).getShip()).toBeNull();
   });
 
-  test('tile (2, 0) should NOT have a Patrol boat', () => {
-    expect(testBoard.getBoard()[2][0].getShip()).toBeNull();
+  test('tile (3, A) should NOT have a Patrol boat', () => {
+    expect(testBoard.getTile({ x: 3, y: 'A' }).getShip()).toBeNull();
   });
 });
 
@@ -84,12 +98,45 @@ describe('ship overlapping', () => {
 
   beforeAll(() => {
     testBoard.init();
-    testBoard.placeShip({ x: 0, y: 'A' }, patrolBoat, true);
-    testBoard.placeShip({ x: 0, y: 'A' }, submarine, true);
-    testBoard.placeShip({ x: 0, y: 'A' }, submarine, false);
+    testBoard.placeShip({ x: 1, y: 'A' }, patrolBoat, true);
+    testBoard.placeShip({ x: 1, y: 'A' }, submarine, true);
+    testBoard.placeShip({ x: 1, y: 'A' }, submarine, false);
+    testBoard.placeShip({ x: 8, y: 'I' }, submarine, false);
   });
 
-  test('tile (0, 0) should have a patrol boat', () => {
-    expect(testBoard.getBoard()[0][0].getShip().name).toBe('Patrol boat');
+  test('tile (1, A) should have a Patrol boat', () => {
+    expect(testBoard.getTile({ x: 1, y: 'A' }).getShip().name).toBe(
+      'Patrol boat'
+    );
+  });
+
+  test('tile (8, I) should have a Submaribe', () => {
+    expect(testBoard.getTile({ x: 8, y: 'I' }).getShip().name).toBe(
+      'Submarine'
+    );
+  });
+});
+
+describe('ship object should be the same across tiles', () => {
+  const testBoard = board.boardFactory();
+  const patrolBoat = ship.shipFactory('Patrol boat', 2);
+
+  beforeAll(() => {
+    testBoard.init();
+    testBoard.placeShip({ x: 1, y: 'B' }, patrolBoat, false);
+
+    // Hit tiles (1, B), (2, B) where the ship is placed
+    testBoard.getTile({ x: 1, y: 'B' }).hit();
+    testBoard.getTile({ x: 2, y: 'B' }).hit();
+  });
+
+  test('tile (1, B) should have a Patrol boat', () => {
+    expect(testBoard.getTile({ x: 1, y: 'B' }).getShip().name).toBe(
+      'Patrol boat'
+    );
+  });
+
+  test('tile (1, B) is hit', () => {
+    expect(testBoard.getTile({ x: 1, y: 'B' }).isHit).toBeTruthy();
   });
 });
