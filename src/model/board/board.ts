@@ -1,23 +1,34 @@
 import { lettersToArrIndex } from '../../utils/convertBoardUnits';
 import { Ship, shipFactory } from '../ship/ship';
 import { Position } from './tile/position';
-import { Tile, tileFactory } from './tile/tile';
+import { ShipIndex, Tile, tileFactory } from './tile/tile';
 
 interface Board {
+  shipArr: Array<Ship>;
   init: Function;
   placeShip: Function;
+  receiveAttack: Function;
   getBoard: Function;
   getTile: Function;
 }
 
 function boardFactory(): Board {
+  // Array holding board's ships
+  const shipArr: Array<Ship> = [
+    shipFactory('Carrier', 5),
+    shipFactory('Battleship', 4),
+    shipFactory('Destroyer', 3),
+    shipFactory('Submarine', 3),
+    shipFactory('Patrol Boat', 2),
+  ];
+
   const board: Array<Array<Tile>> = [];
 
   const xArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const yArr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
 
   function init(): void {
-    // Initialize board
+    // Initialize board grid
     for (let i = 0; i < 10; i++) {
       board.push([]);
       for (let j = 0; j < 10; j++) {
@@ -35,7 +46,12 @@ function boardFactory(): Board {
    * @param ship The ship to be placed.
    * @param vertical True if ship is placed vertically.
    */
-  function placeShip(pos: Position, ship: Ship, vertical: boolean): void {
+  function placeShip(
+    pos: Position,
+    shipIndex: ShipIndex,
+    vertical: boolean
+  ): void {
+    const ship = shipArr[shipIndex];
     // Check available space for ship based on rotation
     const shipFitsBoard = vertical
       ? 10 - (lettersToArrIndex(pos.y) + 1) + 1 - ship.length >= 0
@@ -48,8 +64,8 @@ function boardFactory(): Board {
         for (let i = 0; i < ship.length; i++) {
           // Tiles with no ship return null as ship value
           const hasShip =
-            board[pos.x - 1][lettersToArrIndex(pos.y) + i].getShip();
-          if (hasShip) {
+            board[pos.x - 1][lettersToArrIndex(pos.y) + i].getShipIndex();
+          if (hasShip !== null) {
             console.log('ship already placed');
             return;
           }
@@ -63,8 +79,8 @@ function boardFactory(): Board {
             }`
           );
 
-          board[pos.x - 1][lettersToArrIndex(pos.y) + i].setShip(
-            shipFactory(ship.name, ship.length)
+          board[pos.x - 1][lettersToArrIndex(pos.y) + i].setShipIndex(
+            shipIndex
           );
         }
       } else {
@@ -72,8 +88,8 @@ function boardFactory(): Board {
         for (let i = 0; i < ship.length; i++) {
           // Tiles with no ship return null as ship value
           const hasShip =
-            board[pos.x - 1 + i][lettersToArrIndex(pos.y)].getShip();
-          if (hasShip) {
+            board[pos.x - 1 + i][lettersToArrIndex(pos.y)].getShipIndex();
+          if (hasShip !== null) {
             console.log('ship already placed');
             return;
           }
@@ -87,8 +103,8 @@ function boardFactory(): Board {
             )}`
           );
 
-          board[pos.x - 1 + i][lettersToArrIndex(pos.y)].setShip(
-            shipFactory(ship.name, ship.length)
+          board[pos.x - 1 + i][lettersToArrIndex(pos.y)].setShipIndex(
+            shipIndex
           );
         }
       }
@@ -100,11 +116,9 @@ function boardFactory(): Board {
 
   function receiveAttack(pos: Position): void {
     const currBoard = getBoard();
-    if (currBoard[pos.x - 1][lettersToArrIndex(pos.y)].getShip() === null) {
-      // No ship, just mark tile as hit
-    } else {
-      // Call hit method on ship
-    }
+    const tileAttacked = currBoard[pos.x - 1][lettersToArrIndex(pos.y)];
+
+    tileAttacked.hit(shipArr);
   }
 
   function getBoard() {
@@ -116,8 +130,10 @@ function boardFactory(): Board {
   }
 
   return {
+    shipArr,
     init,
     placeShip,
+    receiveAttack,
     getBoard,
     getTile,
   };
