@@ -8,6 +8,7 @@ interface Board {
   init: Function;
   placeShip: Function;
   receiveAttack: Function;
+  allShipsSunk: Function;
   getBoard: Function;
   getTile: Function;
 }
@@ -111,6 +112,13 @@ function boardFactory(): Board {
     tileAttacked.hit(shipArr);
   }
 
+  function allShipsSunk(): boolean {
+    shipArr.forEach((ship) => {
+      if (!ship.isSunk) return false;
+    });
+    return true;
+  }
+
   function getBoard() {
     return board;
   }
@@ -124,6 +132,7 @@ function boardFactory(): Board {
     init,
     placeShip,
     receiveAttack,
+    allShipsSunk,
     getBoard,
     getTile,
   };

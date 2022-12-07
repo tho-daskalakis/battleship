@@ -145,3 +145,72 @@ describe('ship object should be the same across tiles', () => {
     expect(testBoard.shipArr[shipIndex].getHits()).toBe(2);
   });
 });
+
+describe('allShipsSunk()', () => {
+  const testBoard = board.boardFactory();
+
+  beforeAll(() => {
+    testBoard.init();
+
+    // Place ships
+    testBoard.placeShip({ x: 1, y: 'A' }, 0, false);
+    testBoard.placeShip({ x: 1, y: 'B' }, 1, false);
+    testBoard.placeShip({ x: 1, y: 'C' }, 2, false);
+    testBoard.placeShip({ x: 1, y: 'D' }, 3, false);
+    testBoard.placeShip({ x: 1, y: 'E' }, 4, false);
+
+    // Sink Carrier
+    const carrier = testBoard.shipArr[0];
+    for (let i = 1; i <= carrier.length; i++) {
+      testBoard.receiveAttack({ x: i, y: 'A' });
+    }
+
+    // Sink Battleship
+    const battleship = testBoard.shipArr[1];
+    for (let i = 1; i <= battleship.length; i++) {
+      testBoard.receiveAttack({ x: i, y: 'B' });
+    }
+
+    // Sink Destroyer
+    const destroyer = testBoard.shipArr[2];
+    for (let i = 1; i <= destroyer.length; i++) {
+      testBoard.receiveAttack({ x: i, y: 'C' });
+    }
+
+    // Sink Submarine
+    const submarine = testBoard.shipArr[3];
+    for (let i = 1; i <= submarine.length; i++) {
+      testBoard.receiveAttack({ x: i, y: 'D' });
+    }
+
+    // Sink Patrol Boat
+    const patrolBoat = testBoard.shipArr[4];
+    for (let i = 1; i <= patrolBoat.length; i++) {
+      testBoard.receiveAttack({ x: i, y: 'E' });
+    }
+  });
+
+  test('Carrier is sunk', () => {
+    expect(testBoard.shipArr[0].isSunk()).toBeTruthy();
+  });
+
+  test('Battleship is sunk', () => {
+    expect(testBoard.shipArr[1].isSunk()).toBeTruthy();
+  });
+
+  test('Destroyer is sunk', () => {
+    expect(testBoard.shipArr[2].isSunk()).toBeTruthy();
+  });
+
+  test('Submarine is sunk', () => {
+    expect(testBoard.shipArr[3].isSunk()).toBeTruthy();
+  });
+
+  test('Patrol Boat is sunk', () => {
+    expect(testBoard.shipArr[4].isSunk()).toBeTruthy();
+  });
+
+  test('allShipsSunk() returns true', () => {
+    expect(testBoard.allShipsSunk()).toBeTruthy();
+  });
+});
