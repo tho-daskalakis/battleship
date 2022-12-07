@@ -16,22 +16,18 @@ describe('default tile of coords(0, A)', () => {
   });
 
   test('tile should start with no ship (null)', () => {
-    expect(testTile.getShip()).toBeNull();
+    expect(testTile.getShipIndex()).toBeNull();
   });
 });
 
 describe('ships on tiles', () => {
-  const testShip = ship.shipFactory('Carrier', 5);
+  const testShipIndex = 0;
 
   beforeAll(() => {
-    testTile.setShip(ship.shipFactory('Carrier', 5));
+    testTile.setShipIndex(0);
   });
 
-  test('test ship name', () => {
-    expect(testTile.getShip().name).toBe(testShip.name);
-  });
-
-  test('test ship length', () => {
-    expect(testTile.getShip().length).toBe(testShip.length);
+  test('test ship index', () => {
+    expect(testTile.getShipIndex()).toBe(testShipIndex);
   });
 });

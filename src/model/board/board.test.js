@@ -1,6 +1,5 @@
 const board = require('./board');
 const tile = require('./tile/tile');
-const ship = require('../ship/ship');
 
 describe('board init', () => {
   const testBoard = board.boardFactory();

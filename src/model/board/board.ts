@@ -58,6 +58,8 @@ function boardFactory(): Board {
       : 10 - pos.x + 1 - ship.length >= 0;
 
     if (shipFitsBoard) {
+      // TODO: Handle ship overlapping
+
       // Place ship according to rotation
       if (vertical) {
         // Check for vertical ship overlap
@@ -66,19 +68,13 @@ function boardFactory(): Board {
           const hasShip =
             board[pos.x - 1][lettersToArrIndex(pos.y) + i].getShipIndex();
           if (hasShip !== null) {
-            console.log('ship already placed');
+            // console.log('ship already placed');
             return;
           }
         }
 
         // Space clear, place ship
         for (let i = 0; i < ship.length; i++) {
-          console.log(
-            `placing ${ship.name} at ${pos.x - 1}, ${
-              lettersToArrIndex(pos.y) + i
-            }`
-          );
-
           board[pos.x - 1][lettersToArrIndex(pos.y) + i].setShipIndex(
             shipIndex
           );
@@ -90,19 +86,13 @@ function boardFactory(): Board {
           const hasShip =
             board[pos.x - 1 + i][lettersToArrIndex(pos.y)].getShipIndex();
           if (hasShip !== null) {
-            console.log('ship already placed');
+            // console.log('ship already placed');
             return;
           }
         }
 
         // Space clear, place ship
         for (let i = 0; i < ship.length; i++) {
-          console.log(
-            `placing ${ship.name} at ${pos.x - 1 + i}, ${lettersToArrIndex(
-              pos.y
-            )}`
-          );
-
           board[pos.x - 1 + i][lettersToArrIndex(pos.y)].setShipIndex(
             shipIndex
           );
@@ -110,7 +100,7 @@ function boardFactory(): Board {
       }
     } else {
       // TODO: Handle ship out of bounds
-      console.log(`${ship.name} does not fit on board`);
+      // console.log(`${ship.name} does not fit on board`);
     }
   }
 
