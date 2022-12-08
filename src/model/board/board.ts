@@ -138,6 +138,6 @@ function boardFactory(): Board {
   };
 }
 
-export { boardFactory };
+export { Board, boardFactory };
 
 module.exports = { boardFactory };
