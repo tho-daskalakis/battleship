@@ -9,4 +9,4 @@ interface Position {
   y: yPosition;
 }
 
-export { xPosition, yPosition, Position };
+export { xArr, yArr, xPosition, yPosition, Position };
