@@ -1,4 +1,4 @@
-import { xArr, yArr } from '../../model/board/tile/position';
+import { Position, xArr, yArr } from '../../model/board/tile/position';
 
 function createBoardDisplay(): HTMLDivElement {
   const boardDisplay = document.createElement('div');
@@ -58,16 +58,23 @@ function gridFactory(): HTMLDivElement {
   const grid = document.createElement('div');
   grid.classList.add('board-grid');
 
-  for (let i = 0; i < 100; i++) {
-    grid.appendChild(tileFactory());
+  for (let i = 0; i < 10; i++) {
+    for (let j = 0; j < 10; j++) {
+      const xCoord = xArr[j];
+      const yCoord = yArr[i];
+      grid.appendChild(tileFactory({ x: xCoord, y: yCoord }));
+    }
   }
 
   return grid;
 }
 
-function tileFactory(): HTMLDivElement {
+function tileFactory(pos: Position): HTMLDivElement {
   const tile = document.createElement('div');
   tile.classList.add('tile');
+
+  tile.dataset.xCoord = pos.x.toString();
+  tile.dataset.yCoord = pos.y;
 
   return tile;
 }
