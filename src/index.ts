@@ -1,4 +1,4 @@
 import './index.scss';
-import { createMainPage } from './pages/mainPage';
+import { createMainPage } from './view/mainPage';
 
 createMainPage();
