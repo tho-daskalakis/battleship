@@ -59,7 +59,7 @@ function gridFactory(): HTMLDivElement {
   grid.classList.add('board-grid');
 
   for (let i = 0; i < 100; i++) {
-    grid.appendChild(emptyDivFactory());
+    grid.appendChild(tileFactory());
   }
 
   return grid;
@@ -67,6 +67,7 @@ function gridFactory(): HTMLDivElement {
 
 function tileFactory(): HTMLDivElement {
   const tile = document.createElement('div');
+  tile.classList.add('tile');
 
   return tile;
 }

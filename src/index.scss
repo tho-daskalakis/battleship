@@ -23,7 +23,8 @@ body {
 }
 
 .board {
-  background-color: darkseagreen;
+  background-color: seagreen;
+  padding: 8px;
 
   display: grid;
   grid-template-rows: 1fr 20fr;
@@ -47,15 +48,21 @@ body {
       text-align: center;
     }
   }
-  .board-grid {
+}
+
+.board-grid {
+  border: solid 1px yellow;
+
+  display: grid;
+  grid-template-rows: repeat(10, 1fr);
+  grid-template-columns: repeat(10, 1fr);
+
+  .tile {
     border: solid 1px yellow;
 
-    display: grid;
-    grid-template-rows: repeat(10, 1fr);
-    grid-template-columns: repeat(10, 1fr);
-
-    * {
-      border: solid 1px yellow;
+    &:hover {
+      background-color: chocolate;
+      cursor: crosshair;
     }
   }
 }
