@@ -1,3 +1,5 @@
+import { xArr, yArr } from '../../model/board/tile/position';
+
 function createBoardDisplay(): HTMLDivElement {
   const div = document.createElement('div');
 
@@ -36,6 +38,14 @@ function playerNameFactory(name: string) {
 function coordsFactory(axis: string): HTMLDivElement {
   const div = document.createElement('div');
   div.classList.add(`${axis}-coords`);
+
+  const coordsArr = axis === 'x' ? xArr : yArr;
+
+  coordsArr.forEach((coord) => {
+    const p = document.createElement('p');
+    p.textContent = coord.toString();
+    div.appendChild(p);
+  });
 
   return div;
 }
