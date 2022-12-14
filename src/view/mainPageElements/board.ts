@@ -1,53 +1,53 @@
 import { xArr, yArr } from '../../model/board/tile/position';
 
 function createBoardDisplay(): HTMLDivElement {
-  const div = document.createElement('div');
+  const boardDisplay = document.createElement('div');
 
-  div.id = 'board-display';
+  boardDisplay.id = 'board-display';
 
-  div.appendChild(playerNameFactory('Player'));
-  div.appendChild(playerNameFactory('Computer'));
-  div.appendChild(boardFactory('player-board'));
-  div.appendChild(boardFactory('computer-board'));
+  boardDisplay.appendChild(playerNameFactory('Player'));
+  boardDisplay.appendChild(playerNameFactory('Computer'));
+  boardDisplay.appendChild(boardFactory('player-board'));
+  boardDisplay.appendChild(boardFactory('computer-board'));
 
-  return div;
+  return boardDisplay;
 }
 
 function boardFactory(boardID: string): HTMLDivElement {
-  const div = document.createElement('div');
-  div.classList.add('board');
-  div.id = boardID;
+  const board = document.createElement('div');
+  board.classList.add('board');
+  board.id = boardID;
 
-  div.appendChild(emptyDivFactory());
-  div.appendChild(coordsFactory('x'));
-  div.appendChild(coordsFactory('y'));
-  div.appendChild(gridFactory());
+  board.appendChild(emptyDivFactory());
+  board.appendChild(coordsFactory('x'));
+  board.appendChild(coordsFactory('y'));
+  board.appendChild(gridFactory());
 
-  return div;
+  return board;
 }
 
 function playerNameFactory(name: string) {
-  const p = document.createElement('p');
-  p.classList.add('player-name');
+  const playerName = document.createElement('p');
+  playerName.classList.add('player-name');
 
-  p.textContent = name;
+  playerName.textContent = name;
 
-  return p;
+  return playerName;
 }
 
 function coordsFactory(axis: string): HTMLDivElement {
-  const div = document.createElement('div');
-  div.classList.add(`${axis}-coords`);
+  const coords = document.createElement('div');
+  coords.classList.add(`${axis}-coords`);
 
   const coordsArr = axis === 'x' ? xArr : yArr;
 
   coordsArr.forEach((coord) => {
     const p = document.createElement('p');
     p.textContent = coord.toString();
-    div.appendChild(p);
+    coords.appendChild(p);
   });
 
-  return div;
+  return coords;
 }
 
 function emptyDivFactory(): HTMLDivElement {
@@ -55,10 +55,20 @@ function emptyDivFactory(): HTMLDivElement {
 }
 
 function gridFactory(): HTMLDivElement {
-  const div = document.createElement('div');
-  div.classList.add('board-grid');
+  const grid = document.createElement('div');
+  grid.classList.add('board-grid');
 
-  return div;
+  for (let i = 0; i < 100; i++) {
+    grid.appendChild(emptyDivFactory());
+  }
+
+  return grid;
+}
+
+function tileFactory(): HTMLDivElement {
+  const tile = document.createElement('div');
+
+  return tile;
 }
 
 export { createBoardDisplay };
