@@ -7,6 +7,10 @@ body {
   font-family: 'Merriweather';
 }
 
+p {
+  margin: 8px;
+}
+
 #board-display {
   display: grid;
   grid-template-rows: 40px 600px;
