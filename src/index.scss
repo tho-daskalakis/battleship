@@ -9,14 +9,10 @@ body {
 
 #board-display {
   display: grid;
-  grid-template-rows: 600px;
+  grid-template-rows: 40px 600px;
   grid-template-columns: 600px 600px;
   gap: 40px;
   align-self: center;
-}
-
-.board {
-  background-color: darkseagreen;
 }
 
 .page-layout {
@@ -24,4 +20,40 @@ body {
   grid-template-rows: 80px 100px 720px;
   grid-template-columns: 1fr;
   justify-items: center;
+}
+
+.board {
+  background-color: darkseagreen;
+
+  display: grid;
+  grid-template-rows: 1fr 20fr;
+  grid-template-columns: 1fr 20fr;
+
+  .x-coords {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(10, 1fr);
+
+    p {
+      text-align: center;
+    }
+  }
+  .y-coords {
+    display: grid;
+    grid-template-rows: repeat(10, 1fr);
+    grid-template-columns: 1fr;
+
+    p {
+      text-align: center;
+    }
+  }
+  .board-grid {
+    display: grid;
+    grid-template-rows: repeat(10, 1fr);
+    grid-template-columns: repeat(10, 1fr);
+  }
+}
+
+.player-name {
+  text-align: center;
 }
