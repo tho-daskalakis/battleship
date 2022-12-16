@@ -3,10 +3,10 @@ import { Position, xPosition, yPosition } from './position';
 
 interface Tile {
   coords: Position;
-  getHit: Function;
-  hit: Function;
-  getShipIndex: Function;
-  setShipIndex: Function;
+  getHit: () => boolean;
+  hit: (shipArr: Ship[]) => void;
+  getShipIndex: () => ShipIndex | null;
+  setShipIndex: (index: ShipIndex) => void;
 }
 
 type ShipIndex = 0 | 1 | 2 | 3 | 4;

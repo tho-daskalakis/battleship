@@ -1,4 +1,4 @@
+import { newGame } from './controller/controller';
 import './index.scss';
-import { createMainPage } from './view/mainPage';
 
-createMainPage();
+newGame();

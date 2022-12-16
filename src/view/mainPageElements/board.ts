@@ -1,4 +1,5 @@
 import { Position, xArr, yArr } from '../../model/board/tile/position';
+import { tileListener } from './eventListener';
 
 function createBoardDisplay(): HTMLDivElement {
   const boardDisplay = document.createElement('div');
@@ -75,6 +76,8 @@ function tileFactory(pos: Position): HTMLDivElement {
 
   tile.dataset.xCoord = pos.x.toString();
   tile.dataset.yCoord = pos.y;
+
+  tile.addEventListener('click', tileListener);
 
   return tile;
 }

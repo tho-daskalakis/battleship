@@ -3,9 +3,9 @@ import { Position } from '../board/tile/position';
 
 interface Player {
   name: string;
-  init: Function;
-  getBoard: Function;
-  attack: Function;
+  init: () => void;
+  getBoard: () => Board;
+  attack: (pos: Position) => Position;
 }
 
 function playerFactory(name: string): Player {

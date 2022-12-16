@@ -1,16 +1,16 @@
 import { lettersToArrIndex } from '../../utils/convertBoardUnits';
 import { Ship, shipFactory } from '../ship/ship';
-import { Position } from './tile/position';
+import { Position, xArr, yArr } from './tile/position';
 import { ShipIndex, Tile, tileFactory } from './tile/tile';
 
 interface Board {
   shipArr: Array<Ship>;
-  init: Function;
-  placeShip: Function;
-  receiveAttack: Function;
-  allShipsSunk: Function;
-  getBoard: Function;
-  getTile: Function;
+  init: () => void;
+  placeShip: (pos: Position, shipIndex: ShipIndex, vertical: boolean) => void;
+  receiveAttack: (pos: Position) => void;
+  allShipsSunk: () => boolean;
+  getBoard: () => Tile[][];
+  getTile: (pos: Position) => Tile;
 }
 
 function boardFactory(): Board {
@@ -24,9 +24,6 @@ function boardFactory(): Board {
   ];
 
   const board: Array<Array<Tile>> = [];
-
-  const xArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  const yArr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
 
   function init(): void {
     // Initialize board grid
