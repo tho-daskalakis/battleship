@@ -58,34 +58,30 @@ function showShipsOnBoard() {
   const domGrid = document.querySelector(
     '#player-board > .board-grid'
   ) as HTMLDivElement;
-  // console.log(domGrid);
-  // console.log(domGrid.childNodes);
-  // console.log(domGrid.children);
   const tileList = [...domGrid.childNodes];
 
   tileGrid.forEach((col) => {
     col.forEach((tile) => {
       // If tile has ship, color it
-      if (tile.getShipIndex() !== null) {
+      const shipIndex = tile.getShipIndex();
+
+      if (shipIndex !== null) {
         const x = tile.coords.x;
         const y = tile.coords.y;
-        console.log(x, y);
 
         const currentTile = tileList.find((element) => {
           if (!(element instanceof HTMLElement)) return undefined;
-          // console.log(element.dataset.xCoord);
 
           if (
             element.dataset.xCoord === x.toString() &&
             element.dataset.yCoord === y.toString()
-          ) {
+          )
             return element;
-          }
         });
 
         if (currentTile instanceof HTMLDivElement) {
-          currentTile.textContent = 'S';
-          currentTile.classList.add('has-ship');
+          currentTile.textContent = playerBoard.shipArr[shipIndex].name;
+          currentTile.classList.add(`has-ship-${shipIndex}`);
         }
       }
     });
